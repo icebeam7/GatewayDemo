@@ -1,0 +1,81 @@
+{
+  "Routes": [
+    // Authentication
+    {
+      "DownstreamPathTemplate": "/authentication/users/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 51792
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/authentication/users/byid/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 51792
+        }
+      ],
+      "UpstreamPathTemplate": "/api/users/byid/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "Key": "user-profile"
+    },
+    // Catalog Service Route
+    {
+      "DownstreamPathTemplate": "/catalog/products/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 51791
+        }
+      ],
+      "UpstreamPathTemplate": "/api/products/",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    // Transaction Service Route
+    {
+      "DownstreamPathTemplate": "/ledger/transactions/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 51790
+        }
+      ],
+      "UpstreamPathTemplate": "/api/transactions/",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/ledger/transactions/byid/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 51790
+        }
+      ],
+      "UpstreamPathTemplate": "/api/transactions/byid/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "Key": "user-transactions"
+    }
+  ],
+  "Aggregates": [
+    {
+      "RouteKeys": [
+        "user-transactions",
+        "user-profile"
+      ],
+      "UpstreamPathTemplate": "/api/user-transactions/{id}"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:51793"
+  }
+}
